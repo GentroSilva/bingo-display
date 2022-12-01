@@ -4,6 +4,9 @@
 		<link rel="stylesheet" type="text/css" href="bingo.css" />
 	</head>
 <body>
+
+<div id="lastNumber">&nbsp;</div>
+
 <div id="spacer">&nbsp;</div>
 <table id="table">
 	<tr>
@@ -98,6 +101,7 @@
 	</tr>
 </table>
 
+
 <input type="button" id="clear" value="Clear">
 
 <script type="text/javascript">
@@ -105,6 +109,7 @@
 	document.querySelector("#clear")
 		.addEventListener("click", event => {
 			if (confirm("Clear Board. Are you sure?")) {
+				document.getElementById("lastNumber").innerHTML = "&nbsp;";
 			    document.querySelectorAll(".cell")
 			    	.forEach(element => element.classList.remove("lastcalled","called"));
 			}
@@ -115,10 +120,15 @@
 			element.addEventListener("click", event => {
 				if (event.target.classList.contains("called")) {
 					event.target.classList.remove("called", "lastcalled");
+					document.getElementById("lastNumber").innerHTML = "&nbsp;";
 				} else {
 					document.querySelectorAll(".cell")
 						.forEach(element => element.classList.remove("lastcalled"));
 					event.target.classList.add("called", "lastcalled");
+					let clickedNumber = event.target.firstChild.data;
+					let letter = event.target.parentNode.querySelector(".letter").firstChild.data;
+					document.getElementById("lastNumber").innerHTML = letter + " " + clickedNumber;
+
 				}
 			});
 		});

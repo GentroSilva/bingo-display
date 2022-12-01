@@ -16,7 +16,7 @@ body {
 	border: 1px solid black;
 	text-align: center;
 	height: 110px;
-	background-color: #F66;
+	background-color: #F194B8;
 }
 
 .cell {
@@ -25,14 +25,15 @@ body {
 	border: 1px solid black;
 	text-align: center;
 	height: 110px;
-	background-color: white;
+	background-color: #B3C7F7;
 	
 }
 .called {
-	background-color: yellow;
+	background-color: #00B4C5;
 }
 .lastcalled {
-	background-color: #8F8;
+	background-color: #C44601;
+	color: white;
 }
 #clear {
 	background-color: blue;
@@ -43,4 +44,10 @@ body {
 }
 #clear:hover {
 	background-color: red;
+}
+#lastNumber {
+	font-family: Helvetica;
+	color:white;
+	text-align: center;
+	font-size: 200pt;
 }
