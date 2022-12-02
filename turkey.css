@@ -1,0 +1,10 @@
+body {
+    background-color: #603814;
+}
+
+img {
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
