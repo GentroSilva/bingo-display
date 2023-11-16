@@ -45,6 +45,16 @@ body {
 #clear:hover {
 	background-color: red;
 }
+#undo {
+	background-color: blue;
+	color:white;
+	font-size:12pt;
+	padding:5px;
+	border-radius: 2px;
+}
+#undo:hover {
+	background-color: red;
+}
 #lastNumber {
 	font-family: Helvetica;
 	color:white;

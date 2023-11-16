@@ -104,31 +104,75 @@
 
 <input type="button" id="clear" value="Clear">
 
+<input type="button" id="undo" value="Undo">
+
 <script type="text/javascript">
+
+	let numberHistory = [];
+
+
+	function selectNumber(number) {
+		if (!numberHistory.includes(number)) {
+			numberHistory.push(number);
+		}
+		
+		updateStates();
+	}
+
+	function unselectNumber(number) {
+		if (numberHistory.includes(number)) {
+			const index = numberHistory.indexOf(number);
+			numberHistory.splice(index, 1);
+		}
+		updateStates();
+	}
+
+	function updateStates() {
+		document.querySelectorAll(".cell")
+			.forEach(element => element.classList.remove("lastcalled","called"));
+
+		if (numberHistory.length == 0) {
+			document.getElementById("lastNumber").innerHTML = "&nbsp;";
+		} else {
+			const number = numberHistory[numberHistory.length - 1];
+			document.getElementById("lastNumber").innerHTML = number;
+			for(i = 0; i < numberHistory.length; i++) {
+				document.getElementById(numberHistory[i])
+					.classList.add("called");
+			}
+			document.getElementById(number).classList.add("lastcalled");
+		}
+	}
 
 	document.querySelector("#clear")
 		.addEventListener("click", event => {
 			if (confirm("Clear Board. Are you sure?")) {
-				document.getElementById("lastNumber").innerHTML = "&nbsp;";
-			    document.querySelectorAll(".cell")
-			    	.forEach(element => element.classList.remove("lastcalled","called"));
+				while(numberHistory.length > 0) {
+					numberHistory.pop();
+				}
+				updateStates();
+			}
+    	});
+	document.querySelector("#undo")
+		.addEventListener("click", event => {
+			if (numberHistory.length > 0) {
+				unselectNumber(numberHistory[numberHistory.length - 1]);
 			}
     	});
 
 	document.querySelectorAll(".cell")
 		.forEach(element => {
-			element.addEventListener("click", event => {
-				if (event.target.classList.contains("called")) {
-					event.target.classList.remove("called", "lastcalled");
-					document.getElementById("lastNumber").innerHTML = "&nbsp;";
-				} else {
-					document.querySelectorAll(".cell")
-						.forEach(element => element.classList.remove("lastcalled"));
-					event.target.classList.add("called", "lastcalled");
-					let clickedNumber = event.target.firstChild.data;
-					let letter = event.target.parentNode.querySelector(".letter").firstChild.data;
-					document.getElementById("lastNumber").innerHTML = letter + " " + clickedNumber;
+			let clickedNumber = element.firstChild.data;
+			let letter = element.parentNode.querySelector(".letter").firstChild.data;
+			element.id = letter + " " + clickedNumber
 
+			element.addEventListener("click", event => {
+				let desc = event.target.id
+
+				if (event.target.classList.contains("called")) {
+					unselectNumber(desc);
+				} else {
+					selectNumber(desc);
 				}
 			});
 		});
