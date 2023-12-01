@@ -168,10 +168,10 @@
 
 			element.addEventListener("click", event => {
 				let desc = event.target.id
-
-				if (event.target.classList.contains("called")) {
+				
+				if (event.target.classList.contains("lastcalled")) {
 					unselectNumber(desc);
-				} else {
+				} else if (!event.target.classList.contains("called")) {
 					selectNumber(desc);
 				}
 			});
